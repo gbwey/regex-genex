@@ -20,7 +20,7 @@ parse r = case parseRegex r of
     Left x -> error $ show x
 
 genexPure :: [String] -> [String]
-genexPure = map T.unpack . foldl1 intersect . map (Stream.runStream . run . normalize IntSet.empty . parse)
+genexPure = map T.unpack . foldl1 intersect . map (Stream.toList . run . normalize IntSet.empty . parse)
 
 maxRepeat :: Int
 maxRepeat = 10
@@ -38,7 +38,7 @@ run p = case p of
     PStar _ p -> run $ PBound 0 Nothing p
     PBound low high p -> do
         n <- each [low..maybe (low+maxRepeat) id high]
-        fmap T.concat . sequence $ replicate n (run p) 
+        fmap T.concat . sequence $ replicate n (run p)
     PConcat ps -> fmap T.concat . suspended . sequence $ map run ps
     POr xs -> foldl1 mplus $ map run xs
     PDot{} -> chars $ notChars []

@@ -16,18 +16,19 @@ Tested-With:    GHC==7.10.1
 
 library
     hs-source-dirs:     . src
-    exposed-modules:    Regex.Genex Regex.Genex.Normalize
+    exposed-modules:    Regex.Genex Regex.Genex.Normalize Test.QuickCheck.Regex
     other-modules:    Regex.Genex.Pure
     extensions      : ImplicitParams, NamedFieldPuns, ParallelListComp, PatternGuards, RecordWildCards
     build-depends:
-        base >= 3 && < 5, mtl, containers, sbv >= 5 && < 6, regex-tdfa, stream-monad, text, logict
+        base >= 3 && < 5, mtl, containers, sbv, regex-tdfa, stream-monad == 0.4.0.3, text, logict
 
 executable genex
     main-is:            Main.hs
     hs-source-dirs:     . src
+    other-modules:    Regex.Genex Regex.Genex.Normalize Regex.Genex.Pure Test.QuickCheck.Regex
     extensions      : ImplicitParams, NamedFieldPuns, ParallelListComp, PatternGuards, RecordWildCards
     build-depends:
-        base >= 3 && < 5, mtl, containers, sbv >= 5 && < 6, regex-tdfa
+        base >= 3 && < 5, mtl, containers, sbv, regex-tdfa, QuickCheck
 
 source-repository head
   type:     git
